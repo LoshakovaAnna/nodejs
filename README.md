@@ -97,6 +97,7 @@ If user tries to do so, current working directory doesn't change
 * https://nodejs.org/api/process.html#event-exit
 
 ### Read command line - readline
+`const rl = require('readline');`
 
 1) [Accept input from the command line in Node.js](https://nodejs.org/en/learn/command-line/accept-input-from-the-command-line-in-nodejs)
 2) [readline docs](https://nodejs.org/api/readline.html)
@@ -106,10 +107,91 @@ If user tries to do so, current working directory doesn't change
 6) [close](https://nodejs.org/api/readline.html#rlclose)
 
 
-### 
+### Path
+`const path = require('path');`
+* [Node.js File Paths](https://nodejs.org/en/learn/manipulating-files/nodejs-file-paths)
+* [path docs](https://nodejs.org/api/path.html)
+* [path.join()](https://nodejs.org/api/path.html#pathjoinpaths)
+* [path.resolve([...paths])](https://nodejs.org/api/path.html#pathresolvepaths)
 
+### File system
+`const fs = require('fs');`
 
+* [Working with folders in Node.js](https://nodejs.org/en/learn/manipulating-files/working-with-folders-in-nodejs)
+  - `fs.access(), fsPromises.access()`  - check if the folder exists and Node.js can access it with its permissions.
+  - `fs.mkdir() or fs.mkdirSync() or fsPromises.mkdir()` to create a new folder.
+  - `fs.readdir() or fs.readdirSync() or fsPromises.readdir()` to read the contents of a directory.
+  - `fs.rename() or fs.renameSync() or fsPromises.rename()` to rename folder
+  - `fs.rmdir() or fs.rmdirSync() or fsPromises.rmdir()` to remove a folder;
+   { recursive: true, force: true }  to recursively remove the contents. and makes it so that exceptions will be ignored if the folder does not exist..
+  - 
+  - `fs.unlink(path, callback) fs .unlinkSync(path) fsPromises.unlink(path)` - to delete File
+    `fs.closeSync(fs.openSync(copyPath, 'w'));`  
 
+* [fs docs](https://nodejs.org/api/fs.html)
+* [fs.existsSync(path)](https://nodejs.org/api/fs.html#fsexistssyncpath)
+* []()
+
+* [Working with file descriptors in Node.js](https://nodejs.org/en/learn/manipulating-files/working-with-file-descriptors-in-nodejs)
+``` bash
+fs.open('/Users/joe/test.txt', 'r', (err, fd) => {
+  // fd is our file descriptor
+  r | r+ | w+ |a | a+
+});
+```
+* [Reading files with Node.js](https://nodejs.org/en/learn/manipulating-files/reading-files-with-nodejs)
+ ` fs.readFile(), fs.readFileSync() and fsPromises.readFile()` read the full content of the file in memory before returning the data.
+* [Writing files with Node.js](https://nodejs.org/en/learn/manipulating-files/writing-files-with-nodejs)
+`fs.writeFile()  fs.writeFileSync() fsPromises.writeFile()` -replace content
+* [Appending content to a file](https://nodejs.org/en/learn/manipulating-files/writing-files-with-nodejs#appending-content-to-a-file)
+  `fs.appendFile()  fs.appendFileSync() fsPromises.appendFile()`
+  https://nodejsdev.ru/api/stream/#_2
+``` bash
+  const readStream = fs.createReadStream('filePath');
+  const compressStream = zlib.createGzip();
+  const writeStream = fs.createWriteStream('filePath');
+
+  let i =0;
+   readStream.on('data', (chunk) => {
+     console.log('---------');
+     console.log(i);
+     i++;
+     writeStream.write('\n ---CHUNK START--- \n');
+     writeStream.write(chunk);
+     writeStream.write('\n ---CHUNK END--- \n');
+   });
+ 
+
+const handleError = ()=> {
+    console.log('Error');
+    readStream.destroy();
+    writeStream.end('Finished with error...');
+}
+
+or
+readStream
+.on('error', handleError)
+.pipe(compressStream)
+.pipe(writeStream)
+.on('error', handleError)
+```
+
+* Readable streams
+https://imnotgenius.com/25-potoki-dannyh-v-node-js-fs-readstream/
+* 
+https://nodejs.org/api/fs.html#fscreatereadstreampath-options
+https://nodejs.org/api/stream.html#readable-streams
+
+### HASH
+* https://nodejs.org/api/crypto.html
+* [HOW TO GET THE HASH OF A FILE IN NODE.JS](https://ilikekillnerds.com/2020/04/how-to-get-the-hash-of-a-file-in-node-js/)
+
+### compression
+
+* [zlib](https://nodejs.org/api/zlib.html)
+* [Streams and Brotli compression in Node.js](https://medium.com/@linoyzaga/streams-and-brotli-compression-in-node-js-fc2507d4d177)
+
+`os.homedir(); // current =  __dirname;`
 
 
 
